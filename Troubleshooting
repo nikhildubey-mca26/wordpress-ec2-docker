@@ -1,0 +1,21 @@
+## Troubleshooting
+
+**1. Port 80 Already in Use**
+- **Error:** `Bind for 0.0.0.0:80 failed: port is already allocated`
+- **Solution:** Checked which process was using port 80 using `sudo lsof -i :80`. Apache was already running on the EC2 instance, so I stopped it with `sudo systemctl stop apache2` and then restarted Docker.
+
+**2. Incorrect Docker Compose File Name**
+- **Error:** Docker Compose was not detecting the file.
+- **Solution:** The file was named `docker-compose.ymal` instead of `docker-compose.yml`. Renamed it to the correct name.
+
+**3. Docker Permission Denied**
+- **Error:** `permission denied while trying to connect to the Docker daemon socket`
+- **Solution:** Added the user to the Docker group using `sudo usermod -aG docker ubuntu` and restarted the session.
+
+**4. WordPress Container Restarting Again and Again**
+- **Error:** Container was in a restart loop and WordPress was not loading.
+- **Solution:** Stopped all containers and removed volumes using `docker-compose down -v`, then started fresh with `docker-compose up -d`.
+
+**5. Git Push Failed Due to Wrong File Path**
+- **Error:** `Cannot find path specified` while moving files in PowerShell.
+- **Solution:** Used wildcard commands like `Move-Item ..\docker* .` to move the file correctly into the repository folder.
